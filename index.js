@@ -1,10 +1,12 @@
 var OAuth2Strategy = require('passport-oauth2');
-var AuthorizationError = require('./error/authorizationerror')
+var AuthorizationError = require('./error/authorizationerror');
 var idcs = require('./lib/idcs-discovery');
 var https = require('https');
 var util = require('util');
-var url = require('url')
+var url = require('url');
+var debug = require('debug')('idcs-passport-strat-randman');
 
+debug('passport-oidcs', Strategy);
 
 const ERR_NO_CONFIG="An attempt was made to initialise the idcs-passport-authentication-strategy without a configuration.";
 const ERR_MISSING_CONFIG_FIELDS="Unable to initialise idcs-authentication strategy, required parameters not provided.";
@@ -18,7 +20,7 @@ const DEFAULT_DISCOVERY_URL = "/.well-known/idcs-configuration";
 const DEFAULT_SCOPE = "openid urn:opc:idm:__myscopes__ offline_access";
 const DEFAULT_PROFILE_URL = "/admin/v1/Me";
 const DEFAULT_LOGOUT_URL = "/oauth2/v1/userlogout";
-const DEFAULT_POST_LOGOUT_URL = "http://localhost/dummy"
+const DEFAULT_POST_LOGOUT_URL = "http://localhost/dummy";
 
 function Strategy(configuration, verify){
   if(!configuration){

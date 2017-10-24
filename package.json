@@ -9,10 +9,10 @@
   "keywords": [
     "idcs",
     "passport",
-	"passportjs",
+    "passportjs",
     "Oracle",
-	"OAuth",
-	"authentication"
+    "OAuth",
+    "authentication"
   ],
   "author": "callan.howell-pavia@oracle.com",
   "license": "MIT",
@@ -20,5 +20,8 @@
     "passport-oauth2": "^1.3.0",
     "request": "^2.79.0",
     "js-base64": "^2.1.9"
+  },
+  "devDependencies": {
+    "debug": "^3.1.0"
   }
 }
