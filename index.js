@@ -6,8 +6,6 @@ var util = require('util');
 var url = require('url');
 var debug = require('debug')('idcs-passport-strat-randman');
 
-debug('passport-oidcs', Strategy);
-
 const ERR_NO_CONFIG="An attempt was made to initialise the idcs-passport-authentication-strategy without a configuration.";
 const ERR_MISSING_CONFIG_FIELDS="Unable to initialise idcs-authentication strategy, required parameters not provided.";
 const ERR_UNDEFINED_ENDPOINT="The IDCS Authentication strategy has not yet completed initialisation, "
@@ -93,6 +91,8 @@ OAuth2Strategy.prototype.authenticate = function(req, options) {
   options = options || {};
   var self = this;
 
+  debug('self.config: ', self.config);
+
   if (req.query && req.query.error) {
     if (req.query.error == 'access_denied') {
       return this.fail({ message: req.query.error_description });
@@ -130,6 +130,7 @@ OAuth2Strategy.prototype.authenticate = function(req, options) {
       //Use our own access token service, because IDCS doesn't like client_id/secret in the body
       idcs.getOAuthAccessToken(self.config, code, self.idcsAgent)
         .then(function(tokens){
+          debug('Tokens:', tokens);
           var accessToken = tokens.access_token;
           var refreshToken = tokens.refresh_token;
           var idToken = tokens.id_token;
