@@ -130,6 +130,7 @@ OAuth2Strategy.prototype.authenticate = function(req, options) {
         .then(function(tokens){
           var accessToken = tokens.access_token;
           var refreshToken = tokens.refresh_token;
+          var idToken = tokens.id_token;
           self.userProfile(accessToken, function(err, profile) {
             if (err) { return self.error(err); }
 
@@ -145,17 +146,17 @@ OAuth2Strategy.prototype.authenticate = function(req, options) {
             try {
               if (self._passReqToCallback) {
                 var arity = self._verify.length;
-                if (arity == 6) {
-                  self._verify(req, accessToken, refreshToken, params, profile, verified);
-                } else { // arity == 5
-                  self._verify(req, accessToken, refreshToken, profile, verified);
+                if (arity == 7) {
+                  self._verify(req, accessToken, refreshToken, idToken, params, profile, verified);
+                } else { // arity == 6
+                  self._verify(req, accessToken, refreshToken, idToken, profile, verified);
                 }
               } else {
                 var arity = self._verify.length;
-                if (arity == 5) {
-                  self._verify(accessToken, refreshToken, params, profile, verified);
-                } else { // arity == 4
-                  self._verify(accessToken, refreshToken, profile, verified);
+                if (arity == 6) {
+                  self._verify(accessToken, refreshToken, idToken, params, profile, verified);
+                } else { // arity == 5
+                  self._verify(accessToken, refreshToken, idToken, profile, verified);
                 }
               }
             } catch (ex) {
